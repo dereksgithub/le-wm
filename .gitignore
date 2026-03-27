@@ -1,1 +1,3 @@
 knowledge/*
+__pycache__/
+*.py[cod]

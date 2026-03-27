@@ -7,7 +7,7 @@ world:
   env_name: swm/ReacherDMControl-v0
   num_envs: ${eval.num_eval}
   max_episode_steps: ??? # make sure it's >= eval_budget
-  history_size: 1
+  history_size: 3
   frame_skip: 1
   task: qpos_match
 
@@ -47,4 +47,3 @@ eval:
 
 output:
   filename: dmc_results.txt
-

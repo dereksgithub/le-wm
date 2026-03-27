@@ -1,0 +1,4 @@
+- data=pusht
+- model=spatial_pde
+- subdir=notebooks/spatial_pde_pusht_20260327_144936
+- wandb.enabled=False

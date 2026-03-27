@@ -68,6 +68,18 @@ To launch training:
 python train.py data=pusht
 ```
 
+Model variants are selected through the Hydra `model` group:
+```bash
+# Current pooled-latent baseline
+python train.py data=pusht model=cls_transformer
+
+# Spatial token baseline with transformer dynamics
+python train.py data=pusht model=spatial_transformer
+
+# Spatial token hybrid with PDE dynamics
+python train.py data=pusht model=spatial_pde
+```
+
 Checkpoints are saved to `$STABLEWM_HOME` upon completion.
 
 For baseline scripts, see the stable-worldmodel [scripts](https://github.com/galilai-group/stable-worldmodel/tree/main/scripts/train) folder.
@@ -83,6 +95,8 @@ python eval.py --config-name=pusht.yaml policy=pusht/lewm
 # ✗ incorrect
 python eval.py --config-name=pusht.yaml policy=pusht/lewm_object.ckpt
 ```
+
+The default eval configs now use `history_size=3`. History-size-1 stress-test ablations are available via the `*_h1.yaml` configs.
 
 ## Pretrained Checkpoints
 

@@ -1,0 +1,4 @@
+output_model_name: lewm_cls
+
+wm:
+  variant: cls_transformer

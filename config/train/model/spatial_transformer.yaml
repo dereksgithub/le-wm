@@ -1,0 +1,4 @@
+output_model_name: spatial_lewm_transformer
+
+wm:
+  variant: spatial_transformer

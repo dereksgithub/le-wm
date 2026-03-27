@@ -1,0 +1,9 @@
+defaults:
+  - tworoom
+  - _self_
+
+world:
+  history_size: 1
+
+output:
+  filename: tworoom_results_h1.txt

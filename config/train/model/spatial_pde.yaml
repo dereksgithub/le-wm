@@ -1,0 +1,4 @@
+output_model_name: spatial_lewm_pde
+
+wm:
+  variant: spatial_pde

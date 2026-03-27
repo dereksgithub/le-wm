@@ -1,0 +1,9 @@
+defaults:
+  - reacher
+  - _self_
+
+world:
+  history_size: 1
+
+output:
+  filename: dmc_results_h1.txt

@@ -1,48 +1,37 @@
-defaults:
-  - _self_
-  - data: pusht
-  - model: spatial_pde
-
 output_model_name: lewm
-subdir: ${hydra:job.id}
-
+subdir: notebooks/spatial_pde_pusht_20260327_144936
 num_workers: 6
 train_split: 0.9
 seed: 3072
 img_size: 224
 patch_size: 14
 encoder_scale: tiny
-dump_object: True
-
+dump_object: true
 trainer:
   max_epochs: 100
   devices: auto
   accelerator: gpu
   precision: bf16
   gradient_clip_val: 1.0
-
 loader:
   batch_size: 128
   num_workers: ${num_workers}
-  persistent_workers: True
+  persistent_workers: true
   prefetch_factor: 3
-  pin_memory: True
-
+  pin_memory: true
 optimizer:
   type: AdamW
-  lr: 5e-5
-  weight_decay: 1e-3
-
+  lr: 5.0e-05
+  weight_decay: 0.001
 wandb:
-  enabled: True
+  enabled: false
   config:
     entity: lewm
     project: lewm
     name: ${output_model_name}
     id: ${subdir}
     resume: allow
-    log_model: False
-
+    log_model: false
 wm:
   type: lewm
   variant: spatial_pde
@@ -50,9 +39,8 @@ wm:
   num_preds: 3
   embed_dim: 192
   grid_size: null
-  log_spatial_metrics: True
+  log_spatial_metrics: true
   max_metric_samples: 4096
-
 predictor:
   depth: 6
   heads: 16
@@ -60,20 +48,36 @@ predictor:
   dim_head: 64
   dropout: 0.1
   emb_dropout: 0.0
-
 pde_predictor:
   num_evolve_steps: 4
   dilations:
-    - 1
-    - 2
-    - 4
+  - 1
+  - 2
+  - 4
   reaction_hidden_dim: 384
   norm_every: 2
-
 loss:
   sigreg:
     weight: 0.09
     kwargs:
       knots: 17
       num_proj: 1024
-      sync_ddp: True
+      sync_ddp: true
+data:
+  dataset:
+    num_steps: ${eval:'${wm.num_preds} + ${wm.history_size}'}
+    frameskip: 5
+    name: pusht_expert_train
+    keys_to_load:
+    - pixels
+    - action
+    - proprio
+    - state
+    keys_to_cache:
+    - action
+    - proprio
+    - state
+model:
+  output_model_name: spatial_lewm_pde
+  wm:
+    variant: spatial_pde

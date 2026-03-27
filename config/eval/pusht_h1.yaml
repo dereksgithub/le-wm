@@ -1,0 +1,9 @@
+defaults:
+  - pusht
+  - _self_
+
+world:
+  history_size: 1
+
+output:
+  filename: pusht_results_h1.txt
